@@ -18,7 +18,7 @@ const pdfPreview = document.getElementById('pdfPreview');
 const pdfCanvas = document.getElementById('pdfCanvas');
 const downloadLink = document.getElementById('downloadLink');
 const resetButton = document.getElementById('resetButton');
-const dropArea = document.getElementById('dropArea');
+const dropArea = document.getElementById('dropArea');cle
 const pdfName = document.getElementById('pdfName');
 const closePreview = document.getElementById('closePreview');
 
