@@ -1,6 +1,6 @@
 # Marca de Agua en PDF
 
-Aplicación web para añadir marcas de agua a documentos PDF. Esta herramienta permite añadir texto en forma de marca de agua en un patrón diagonal a través de todas las páginas de un documento PDF. Es ideal para que cuando tienes que presentar una copia de algún documento para realizar un trámite, ese documento no pueda ser utilizado para otra cosa.
+Aplicación web para añadir marcas de agua a documentos PDF. Esta herramienta permite añadir texto en forma de marca de agua en un patrón diagonal a través de todas las páginas de un documento PDF. Es ideal para que cuando tengas que presentar una copia de algún documento para realizar un trámite, ese documento no pueda ser utilizado para otra cosa.
 
 ## Características
 
