@@ -16,25 +16,22 @@
             }
         }
     </script>
-    <style>
-        #dropArea {
-            border: 2px dashed #ccc;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-bottom: 1rem;
-        }
-
-        #dropArea.dragover {
-            background-color: #f0f0f0;
-        }
-        #pdfInput {
-            display: none;
-        }
-    </style>
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen px-4 py-2">
+    <div id="loadingIndicator">
+        <div class="bg-white p-4 rounded-lg shadow-lg">
+            <div class="flex items-center">
+                <svg class="animate-spin h-6 w-6 mr-3 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span class="text-gray-800">Procesando...</span>
+            </div>
+        </div>
+    </div>
+    
     <div class="bg-white rounded-lg shadow-md p-8 max-w-xl w-full">
         <h1 class="text-2xl font-bold mb-6 text-center">Marca de agua en documentos PDF</h1>
 
@@ -56,7 +53,7 @@
                 </button>
             </div>
             <div class="p-4">
-                <canvas id="pdfCanvas" style="width: 100%; border: 1px solid #e5e7eb;"></canvas>
+                <canvas id="pdfCanvas"></canvas>
             </div>
         </div>
 
@@ -72,14 +69,17 @@
         <a id="downloadLink" aria-label="Descargar documento PDF con marca de agua" download="documento_con_marca_de_agua.pdf" class="hidden w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md mb-4 text-center block">Descargar PDF</a>
 
         <footer class="text-center text-gray-500 text-sm mt-8">
-            <p>By Cypher</p>
+            <p><a href="https://x.com/Cypher1984" target="_blank">by Cypher</a></p>
         </footer>
     </div>
 
+    <!-- Cargar las bibliotecas con defer para mejorar la carga -->
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        document.addEventListener('DOMContentLoaded', function() {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        });
     </script>
     <script src="app.js"></script>
 </body>

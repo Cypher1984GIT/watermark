@@ -1,0 +1,64 @@
+/* Estilos para el área de arrastrar y soltar */
+#dropArea {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+#dropArea.dragover {
+    background-color: #f0f0f0;
+}
+
+/* Ocultar el input de archivo nativo */
+#pdfInput {
+    display: none;
+}
+
+/* Estilos para el indicador de carga */
+#loadingIndicator {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+#loadingIndicator.visible {
+    display: flex;
+}
+
+/* Estilos para el botón de descarga */
+#downloadLink {
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos para la previsualización del PDF */
+#pdfCanvas {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+}
+
+/* Animación para el spinner de carga */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+} 
