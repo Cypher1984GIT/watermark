@@ -39,7 +39,7 @@ You can try the application here: https://cypher1984git.github.io/watermark/
 
 ## 👨‍💻 Author
 
-Developed by [Cypher](https://x.com/Cypher1984)
+Developed by Cypher
 
 ## 📄 License
 
