@@ -1,46 +1,46 @@
-# Marca de Agua en PDF
+# PDF Watermark
 
-Aplicación web para añadir marcas de agua a documentos PDF de forma sencilla. Esta herramienta permite añadir texto en forma de marca de agua en un patrón diagonal a través de todas las páginas de un documento PDF. Es ideal para cuando tienes que presentar documentos para algún trámite y no quieres que esos documenos puedan ser utilizados para otra cosa diferente.
+A simple web application to add watermarks to PDF documents. This tool allows you to add text as a watermark pattern across all pages of a PDF document. It's ideal for when you need to submit documents for a specific procedure and want to ensure they cannot be used for any other purpose.
 
 ## 🌟 Demo
 
-Puedes probar la aplicación aquí: [https://Cypher1984GIT.github.io/marca-de-agua](https://Cypher1984GIT.github.io/marca-de-agua)
+You can try the application here: https://cypher1984git.github.io/watermark/
 
-## ✨ Características
+## ✨ Features
 
-- 📁 Arrastrar y soltar archivos PDF
-- 👁️ Vista previa del documento
-- 📅 Selección de fecha de validez (presente o futura)
-- 🔖 Personalización del propósito del documento
-- ↗️ Patrón de marca de agua diagonal que cubre toda la página
-- 💾 Descarga del PDF con marca de agua
+- 📁 Drag and drop PDF files
+- 👁️ Document preview
+- 📅 Validity date selection (present or future)
+- 🔖 Customization of the document's purpose
+- 🛡️ Multi-layered watermark pattern covering the entire page for better security
+- 💾 Download the watermarked PDF
 
-## 🛠️ Tecnologías utilizadas
+## 🛠️ Technologies Used
 
 - HTML5 / CSS3 / JavaScript
-- TailwindCSS para los estilos
-- PDF.js para la visualización de PDF
-- PDF-Lib para la manipulación de PDF
+- TailwindCSS for styling
+- PDF.js for PDF rendering
+- PDF-Lib for PDF manipulation
 
-## 🚀 Uso
+## 🚀 Usage
 
-1. Arrastra un archivo PDF o haz clic para seleccionarlo
-2. Selecciona la fecha (debe ser igual o posterior a la fecha actual)
-3. Introduce el propósito del documento
-4. Haz clic en "Aplicar marca de agua"
-5. Descarga el documento procesado
+1. Drag and drop a PDF file or click to select it
+2. Select the date (must be the current date or a future one)
+3. Enter the purpose of the document
+4. Click on "Apply Watermark"
+5. Download the processed document
 
-## 💡 Ventajas
+## 💡 Advantages
 
-- 🔒 Procesamiento local: tus documentos no se suben a ningún servidor
-- 🚀 Rápido y eficiente: la marca de agua se aplica instantáneamente
-- 🌐 Accesible desde cualquier dispositivo con un navegador
-- 💼 Ideal para uso profesional y personal
+-  Local processing: your documents are not uploaded to any server
+- 🚀 Fast and efficient: the watermark is applied instantly
+- 🌐 Accessible from any device with a web browser
+- 💼 Ideal for professional and personal use
 
-## 👨‍💻 Autor
+## 👨‍💻 Author
 
-Desarrollado por [Cypher](https://x.com/Cypher1984)
+Developed by [Cypher](https://x.com/Cypher1984)
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles. 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
