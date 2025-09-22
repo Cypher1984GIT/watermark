@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marca de agua en documentos PDF</title>
+    <title>Watermark PDF Documents</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -16,7 +16,7 @@
             }
         }
     </script>
-    <!-- Enlace al archivo CSS externo -->
+    <!-- Link to external CSS file -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen px-4 py-2">
@@ -27,20 +27,20 @@
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span class="text-gray-800">Procesando...</span>
+                <span class="text-gray-800">Processing...</span>
             </div>
         </div>
     </div>
     
     <div class="bg-white rounded-lg shadow-md p-8 max-w-xl w-full">
-        <h1 class="text-2xl font-bold mb-2 text-center">Marca de agua en documentos PDF</h1>
-        <p class="text-gray-600 text-center mb-6">Esta herramienta te permite añadir fácilmente marcas de agua a tus documentos PDF. Ideal para cuando necesitas entregar copias de documentos y quieres asegurarte de que solo se usen para el propósito específico que indiques.</p>
+        <h1 class="text-2xl font-bold mb-2 text-center">Watermark PDF Documents</h1>
+        <p class="text-gray-600 text-center mb-6">This tool allows you to easily add watermarks to your PDF documents. Ideal for when you need to provide copies of documents and want to ensure they are only used for the specific purpose you indicate.</p>
 
         <div id="dropArea" class="w-full">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto mb-2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
             </svg>
-            <p>Arrastra y suelta el archivo PDF aquí o <label for="pdfInput" class="text-blue-500 cursor-pointer">selecciona un archivo</label></p>
+            <p>Drag and drop the PDF file here or <label for="pdfInput" class="text-blue-500 cursor-pointer">select a file</label></p>
         </div>
         <input type="file" id="pdfInput" accept="application/pdf">
         
@@ -58,23 +58,23 @@
             </div>
         </div>
 
-        <label for="watermarkDate" class="block mb-2 text-gray-700 font-medium">Fecha de la marca de agua:</label>
-        <input type="date" id="watermarkDate" placeholder="Selecciona la fecha" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400 mb-4">
+        <label for="watermarkDate" class="block mb-2 text-gray-700 font-medium">Watermark Date:</label>
+        <input type="date" id="watermarkDate" placeholder="Select the date" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400 mb-4">
 
-        <label for="documentPurpose" class="block mb-2 text-gray-700 font-medium">Propósito del documento:</label>
-        <input type="text" id="documentPurpose" placeholder="Por ejemplo: Contrato" maxlength="50" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400 mb-6">
+        <label for="documentPurpose" class="block mb-2 text-gray-700 font-medium">Document Purpose:</label>
+        <input type="text" id="documentPurpose" placeholder="For example: Contract" maxlength="50" class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-400 mb-6">
 
-        <button id="applyWatermark" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md mb-4">Aplicar marca de agua</button>
-        <button id="resetButton" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md mb-4">Limpiar formulario</button>
+        <button id="applyWatermark" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md mb-4">Apply Watermark</button>
+        <button id="resetButton" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md mb-4">Clear Form</button>
 
-        <a id="downloadLink" aria-label="Descargar documento PDF con marca de agua" download="documento_con_marca_de_agua.pdf" class="hidden w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md mb-4 text-center block">Descargar PDF</a>
+        <a id="downloadLink" aria-label="Download PDF document with watermark" download="watermarked_document.pdf" class="hidden w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md mb-4 text-center block">Download PDF</a>
 
         <footer class="text-center text-gray-500 text-sm mt-8">
             <p><a href="https://x.com/Cypher1984" target="_blank">by Cypher</a></p>
         </footer>
     </div>
 
-    <!-- Cargar las bibliotecas con defer para mejorar la carga -->
+    <!-- Load libraries with defer to improve loading -->
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>

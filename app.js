@@ -1,10 +1,10 @@
-// Esperar a que el DOM esté completamente cargado
+// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     initApp();
 });
 
 function initApp() {
-    // Obtener elementos del DOM
+    // Get DOM elements
     const pdfInput = document.getElementById('pdfInput');
     const watermarkDate = document.getElementById('watermarkDate');
     const documentPurpose = document.getElementById('documentPurpose');
@@ -18,7 +18,7 @@ function initApp() {
     const closePreview = document.getElementById('closePreview');
     const loadingIndicator = document.getElementById('loadingIndicator');
 
-    // Función para mostrar/ocultar el indicador de carga
+    // Function to show/hide the loading indicator
     function showLoading(show = true) {
         if (show) {
             loadingIndicator.classList.add('visible');
@@ -27,39 +27,39 @@ function initApp() {
         }
     }
 
-    // Función para verificar dependencias
+    // Function to check dependencies
     function checkDependencies() {
         if (typeof PDFLib === 'undefined') {
-            console.error('Error: La biblioteca PDFLib no está cargada correctamente.');
-            alert('Error: La biblioteca PDFLib no está cargada correctamente. Por favor, recarga la página o verifica tu conexión a internet.');
+            console.error('Error: The PDFLib library is not loaded correctly.');
+            alert('Error: The PDFLib library is not loaded correctly. Please reload the page or check your internet connection.');
             return false;
         }
 
         if (typeof pdfjsLib === 'undefined') {
-            console.error('Error: La biblioteca PDF.js no está cargada correctamente.');
-            alert('Error: La biblioteca PDF.js no está cargada correctamente. Por favor, recarga la página o verifica tu conexión a internet.');
+            console.error('Error: The PDF.js library is not loaded correctly.');
+            alert('Error: The PDF.js library is not loaded correctly. Please reload the page or check your internet connection.');
             return false;
         }
         
         return true;
     }
 
-    // Función para mostrar el preview del PDF
+    // Function to show the PDF preview
     async function showPdfPreview(file) {
         try {
             if (!checkDependencies()) {
-                alert('Error: Las bibliotecas necesarias no están cargadas correctamente. Por favor, recarga la página.');
+                alert('Error: The necessary libraries are not loaded correctly. Please reload the page.');
                 return;
             }
             
             if (!file || file.type !== 'application/pdf') {
-                throw new Error('El archivo seleccionado no es un PDF válido');
+                throw new Error('The selected file is not a valid PDF');
             }
 
-            // Mostrar el indicador de carga
+            // Show the loading indicator
             showLoading(true);
             
-            // Mostrar el contenedor y el nombre del archivo inmediatamente
+            // Show the container and the file name immediately
             pdfName.textContent = file.name;
             pdfPreview.classList.remove('hidden');
 
@@ -67,106 +67,106 @@ function initApp() {
             
             fileReader.onload = async function() {
                 try {
-                    console.log('Iniciando carga del PDF...');
+                    console.log('Starting PDF load...');
                     const typedArray = new Uint8Array(this.result);
                     const loadingTask = pdfjsLib.getDocument(typedArray);
-                    console.log('Cargando PDF...');
+                    console.log('Loading PDF...');
                     const pdf = await loadingTask.promise;
                     
-                    // Mostrar la primera página
-                    console.log('Obteniendo primera página...');
+                    // Show the first page
+                    console.log('Getting first page...');
                     const page = await pdf.getPage(1);
                     const originalViewport = page.getViewport({ scale: 1.0 });
                     
-                    // Ajustar el canvas al tamaño de la página
+                    // Adjust the canvas to the page size
                     const canvas = pdfCanvas;
                     const context = canvas.getContext('2d');
                     
-                    // Calcular la escala para ajustar al ancho del contenedor (menos el padding)
-                    const containerWidth = canvas.parentElement.clientWidth - 32; // 2rem (32px) de padding
+                    // Calculate the scale to fit the container width (minus padding)
+                    const containerWidth = canvas.parentElement.clientWidth - 32; // 2rem (32px) of padding
                     const scale = containerWidth / originalViewport.width;
                     
-                    // Crear nuevo viewport con la escala calculada
+                    // Create a new viewport with the calculated scale
                     const viewport = page.getViewport({ scale });
                     
-                    // Establecer dimensiones del canvas
+                    // Set canvas dimensions
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
                     
-                    console.log('Renderizando página...');
-                    // Renderizar la página
+                    console.log('Rendering page...');
+                    // Render the page
                     await page.render({
                         canvasContext: context,
                         viewport: viewport
                     }).promise;
                     
-                    console.log('PDF renderizado correctamente');
+                    console.log('PDF rendered successfully');
                 } catch (error) {
-                    console.error('Error al renderizar el PDF:', error);
-                    alert(`Error al mostrar la vista previa del PDF: ${error.message}`);
+                    console.error('Error rendering PDF:', error);
+                    alert(`Error showing PDF preview: ${error.message}`);
                     clearForm();
                 } finally {
-                    // Ocultar el indicador de carga
+                    // Hide the loading indicator
                     showLoading(false);
                 }
             };
             
             fileReader.onerror = function(error) {
-                console.error('Error al leer el archivo:', error);
-                alert(`Error al leer el archivo: ${error.message}`);
+                console.error('Error reading file:', error);
+                alert(`Error reading file: ${error.message}`);
                 clearForm();
                 showLoading(false);
             };
             
             fileReader.readAsArrayBuffer(file);
         } catch (error) {
-            console.error('Error general:', error);
+            console.error('General error:', error);
             alert(`Error: ${error.message}`);
             clearForm();
             showLoading(false);
         }
     }
 
-    // Función para aplicar la marca de agua
+    // Function to apply the watermark
     async function addWatermarkToPdf(pdfFile, date, purpose) {
         try {
             showLoading(true);
             
-            // Verificar dependencias
+            // Check dependencies
             if (!PDFLib || !pdfjsLib) {
-                throw new Error('Las bibliotecas necesarias no están cargadas correctamente');
+                throw new Error('The necessary libraries are not loaded correctly');
             }
 
-            // Leer el archivo PDF
+            // Read the PDF file
             const arrayBuffer = await pdfFile.arrayBuffer();
             const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
             const pages = pdfDoc.getPages();
             
             if (pages.length === 0) {
-                throw new Error('El PDF no contiene páginas');
+                throw new Error('The PDF contains no pages');
             }
 
-            // Formatear la fecha para mejor legibilidad
+            // Format the date for better readability
             const [year, month, day] = date.split('-');
             const formattedDate = `${day}/${month}/${year}`;
             
-            // Crear la marca de agua con múltiples capas y efectos
-            const watermarkText = `Válido para ${purpose} ${formattedDate}`;
+            // Create the watermark with multiple layers and effects
+            const watermarkText = `Valid for ${purpose} ${formattedDate}`;
             
-            // Aplicar marca de agua a cada página
+            // Apply watermark to each page
             for (let i = 0; i < pages.length; i++) {
                 const page = pages[i];
                 const { width, height } = page.getSize();
                 
-                // Calcular tamaños basados en las dimensiones de la página
+                // Calculate sizes based on page dimensions
                 const mainSize = Math.min(width, height) / 35;
                 
-                // Patrón de marcas de agua horizontales
-                const stepY = mainSize * 10; // Espaciado vertical entre líneas
+                // Horizontal watermark pattern
+                const stepY = mainSize * 10; // Vertical spacing between lines
                 
-                // Capa 1: Patrón de marcas de agua horizontales principales
+                // Layer 1: Main horizontal watermark pattern
                 for (let y = 0; y < height; y += stepY) {
-                    // Primera línea
+                    // First line
                     page.drawText(watermarkText, {
                         x: 20,
                         y: y,
@@ -175,7 +175,7 @@ function initApp() {
                         opacity: 0.4
                     });
                     
-                    // Segunda línea (desplazada)
+                    // Second line (offset)
                     page.drawText(watermarkText, {
                         x: width / 2,
                         y: y + mainSize * 2,
@@ -185,7 +185,7 @@ function initApp() {
                     });
                 }
 
-                // Capa 2: Marca de agua invertida (para dificultar la eliminación)
+                // Layer 2: Inverted watermark (to make removal difficult)
                 for (let y = stepY / 2; y < height; y += stepY) {
                     page.drawText(watermarkText, {
                         x: width - 20,
@@ -197,8 +197,8 @@ function initApp() {
                     });
                 }
 
-                // Capa 3: Marca de agua central
-                const centerText = `Válido para ${purpose} ${formattedDate}`;
+                // Layer 3: Center watermark
+                const centerText = `Valid for ${purpose} ${formattedDate}`;
                 page.drawText(centerText, {
                     x: width / 2 - 100,
                     y: height / 2,
@@ -207,12 +207,12 @@ function initApp() {
                     opacity: 0.4
                 });
 
-                // Capa 4: Bordes con propósito
-                const borderText = `Válido para ${purpose} ${formattedDate}`;
+                // Layer 4: Borders with purpose
+                const borderText = `Valid for ${purpose} ${formattedDate}`;
                 const borderSize = Math.min(width, height) / 40;
                 const borderStep = borderSize * 10;
                 
-                // Borde superior
+                // Top border
                 for (let x = 0; x < width; x += borderStep) {
                     page.drawText(borderText, {
                         x: x,
@@ -223,7 +223,7 @@ function initApp() {
                     });
                 }
                 
-                // Borde inferior
+                // Bottom border
                 for (let x = 0; x < width; x += borderStep) {
                     page.drawText(borderText, {
                         x: x,
@@ -235,14 +235,14 @@ function initApp() {
                 }
             }
 
-            // Guardar el PDF modificado
+            // Save the modified PDF
             const modifiedPdfBytes = await pdfDoc.save();
             
-            // Crear un blob y URL para la descarga
+            // Create a blob and URL for download
             const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
             
-            // Actualizar el enlace de descarga
+            // Update the download link
             const downloadLink = document.getElementById('downloadLink');
             downloadLink.href = url;
             downloadLink.classList.remove('hidden');
@@ -250,19 +250,19 @@ function initApp() {
             showLoading(false);
             return true;
         } catch (error) {
-            console.error('Error al aplicar la marca de agua:', error);
+            console.error('Error applying watermark:', error);
             showLoading(false);
-            alert('Error al aplicar la marca de agua: ' + error.message);
+            alert('Error applying watermark: ' + error.message);
             return false;
         }
     }
 
-    // Función para limpiar el formulario
+    // Function to clear the form
     function clearForm() {
         pdfInput.value = '';
         documentPurpose.value = '';
         
-        // Establecer la fecha actual como valor predeterminado
+        // Set the current date as the default value
         const today = new Date();
         const year = today.getFullYear();
         const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -280,57 +280,57 @@ function initApp() {
             downloadLink.href = '';
         }
         pdfName.textContent = '';
-        // Restaurar el estado del botón de aplicar marca de agua
+        // Restore the state of the apply watermark button
         applyWatermark.disabled = false;
-        applyWatermark.textContent = 'Aplicar marca de agua';
+        applyWatermark.textContent = 'Apply Watermark';
         applyWatermark.classList.remove('opacity-50');
     }
 
-    // Función para validar los datos del formulario
+    // Function to validate form data
     function validateForm() {
         if (!documentPurpose.value || !watermarkDate.value || !pdfInput.files[0]) {
-            alert("Debes completar todos los campos y seleccionar un archivo PDF.");
+            alert("You must fill in all fields and select a PDF file.");
             return false;
         }
         if (documentPurpose.value.length > 50) {
-            alert("El propósito no puede exceder los 50 caracteres.");
+            alert("The purpose cannot exceed 50 characters.");
             return false;
         }
         
-        // Convertir la fecha seleccionada a formato local (yyyy-mm-dd)
+        // Convert the selected date to local format (yyyy-mm-dd)
         const selectedDateStr = watermarkDate.value;
         const selectedDate = new Date(selectedDateStr + 'T00:00:00');
         
-        // Obtener fecha actual sin horas, minutos ni segundos
+        // Get current date without hours, minutes, or seconds
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         
-        // Ajustar por zona horaria para comparación de fechas
+        // Adjust for timezone for date comparison
         const timezoneOffset = today.getTimezoneOffset() * 60000;
         const todayAdjusted = new Date(today.getTime() - timezoneOffset);
         const selectedDateAdjusted = new Date(selectedDate.getTime() - timezoneOffset);
         
-        // Convertir a formato yyyy-mm-dd para comparación
+        // Convert to yyyy-mm-dd format for comparison
         const todayStr = todayAdjusted.toISOString().split('T')[0];
         const selectedDateAdjustedStr = selectedDateAdjusted.toISOString().split('T')[0];
         
         if (selectedDateAdjustedStr < todayStr) {
-            alert("La fecha seleccionada no puede ser anterior a la fecha actual.");
+            alert("The selected date cannot be earlier than the current date.");
             return false;
         }
         return true;
     }
 
-    // Eventos de la interfaz
+    // UI Events
     applyWatermark.addEventListener('click', async function() {
         if (!validateForm()) return;
         try {
             await addWatermarkToPdf(pdfInput.files[0], watermarkDate.value, documentPurpose.value);
         } catch (error) {
-            console.error('Error al aplicar marca de agua:', error);
-            alert('Error al aplicar la marca de agua: ' + error.message);
+            console.error('Error applying watermark:', error);
+            alert('Error applying watermark: ' + error.message);
             applyWatermark.disabled = false;
-            applyWatermark.textContent = 'Aplicar marca de agua';
+            applyWatermark.textContent = 'Apply Watermark';
             applyWatermark.classList.remove('opacity-50');
             showLoading(false);
         }
@@ -345,7 +345,7 @@ function initApp() {
         pdfPreview.classList.add('hidden');
     });
 
-    // Eventos de arrastrar y soltar
+    // Drag and drop events
     dropArea.addEventListener('dragover', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -370,12 +370,12 @@ function initApp() {
                 pdfInput.files = files;
                 showPdfPreview(file);
             } else {
-                alert('Por favor, selecciona un archivo PDF válido.');
+                alert('Please select a valid PDF file.');
             }
         }
     });
 
-    // Evento para el input de archivo
+    // Event for the file input
     pdfInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
@@ -383,17 +383,17 @@ function initApp() {
         }
     });
 
-    // Validación de fecha
+    // Date validation
     watermarkDate.addEventListener('change', function() {
-        // Convertir la fecha seleccionada a formato local (yyyy-mm-dd)
+        // Convert the selected date to local format (yyyy-mm-dd)
         const selectedDateStr = this.value;
         const selectedDate = new Date(selectedDateStr + 'T00:00:00');
         
-        // Obtener fecha actual sin horas, minutos ni segundos
+        // Get current date without hours, minutes, or seconds
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         
-        // Ajustar por zona horaria para comparación de fechas
+        // Adjust for timezone for date comparison
         const timezoneOffset = today.getTimezoneOffset() * 60000;
         const todayAdjusted = new Date(today.getTime() - timezoneOffset);
         const selectedDateAdjusted = new Date(selectedDate.getTime() - timezoneOffset);
@@ -403,12 +403,11 @@ function initApp() {
         const selectedDateAdjustedStr = selectedDateAdjusted.toISOString().split('T')[0];
         
         if (selectedDateAdjustedStr < todayStr) {
-            alert('La fecha seleccionada no puede ser anterior a la fecha actual.');
+            alert('The selected date cannot be earlier than the current date.');
             this.value = '';
         }
     });
 
-    // Limpiar formulario al iniciar
+    // Clear form on startup
     clearForm();
 }
-
